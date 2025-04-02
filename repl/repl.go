@@ -28,7 +28,7 @@ func Start(in io.Reader, out io.Writer) {
 
 		// print out lexer results
 		for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
-			fmt.Fprintf(out, "%+v\n", tok)
+			// fmt.Fprintf(out, "%+v\n", tok)
 		}
 
 		l2 := lexer.New(line)
