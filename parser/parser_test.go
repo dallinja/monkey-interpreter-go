@@ -640,6 +640,37 @@ func TestCallExpressionParameterParsing(t *testing.T) {
 	}
 }
 
+func TestStringLiteralExpression(t *testing.T) {
+	input := `"hello world";`
+
+	l := lexer.New(input)
+	t.Logf("lexer %#v\n", l)
+
+	p := New(l)
+	program := p.ParseProgram()
+	checkParserErrors(t, p)
+
+	if len(program.Statements) != 1 {
+		t.Fatalf("program has not enough statements. got=%d", len(program.Statements))
+	}
+
+	stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
+	if !ok {
+		t.Fatalf("program.Statements[0] is not ast.ExpressionStatement. got=%T", program.Statements[0])
+	}
+
+	stringLiteral, ok := stmt.Expression.(*ast.StringLiteral)
+	if !ok {
+		t.Fatalf("exp not *ast.StringLiteral. got=%T", stmt.Expression)
+	}
+	if stringLiteral.Value != "hello world" {
+		t.Errorf("stringLiteral.Value not %s. got=%s", "hello world", stringLiteral.Value)
+	}
+	if stringLiteral.TokenLiteral() != "hello world" {
+		t.Errorf("stringLiteral.TokenLiteral not %s. got=%s", "hello world", stringLiteral.TokenLiteral())
+	}
+}
+
 func checkParserErrors(t *testing.T, p *Parser) {
 	errors := p.Errors()
 	if len(errors) == 0 {

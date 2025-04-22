@@ -9,7 +9,7 @@ import (
 	"github.com/dallinja/monkey-interpreter-go/lexer"
 	"github.com/dallinja/monkey-interpreter-go/object"
 	"github.com/dallinja/monkey-interpreter-go/parser"
-	"github.com/dallinja/monkey-interpreter-go/token"
+	// "github.com/dallinja/monkey-interpreter-go/token"
 )
 
 const PROMPT = ">> "
@@ -26,12 +26,12 @@ func Start(in io.Reader, out io.Writer) {
 		}
 
 		line := scanner.Text()
-		l := lexer.New(line)
-
+		
 		// print out lexer results
-		for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
-			// fmt.Fprintf(out, "%+v\n", tok)
-		}
+		// l := lexer.New(line)
+		// for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
+		// 	fmt.Fprintf(out, "%+v\n", tok)
+		// }
 
 		l2 := lexer.New(line)
 		p := parser.New(l2)
